@@ -1,6 +1,6 @@
 #![allow(unused)]
 
-use std::{cmp::Ordering, fmt::Debug, usize};
+use std::{cmp::Ordering, fmt::Debug, slice, usize};
 
 fn bubble_sort<T>(vec: &Vec<T>, asc: bool) -> Vec<T>
 where
@@ -21,6 +21,19 @@ where
         }
     }
     v
+}
+
+fn bubble_sort2<T>(slice: &mut [T])
+where
+    T: PartialOrd,
+{
+    for i in 0..slice.len() - 1 {
+        for j in 0..slice.len() - 1 - i {
+            if slice[j] > slice[j + 1] {
+                slice.swap(j, j + 1);
+            }
+        }
+    }
 }
 
 fn main() {}
@@ -54,5 +67,34 @@ mod test {
         let v = bubble_sort(&v, false);
         println!("{:?}", v);
         assert_eq!(v, vec![123, 91, 86, 56, 45, 32, 5, 5, 3, 1]);
+    }
+
+    #[test]
+    fn t3() {
+        let s = "h*ll wor#$";
+
+        let bts = s.as_bytes();
+
+        println!("\nfor");
+        for i in bts {
+            print!(" {}={}", i, *i as char);
+        }
+
+        println!("\nfor iter");
+        for i in bts.iter() {
+            print!(" {}", i);
+        }
+
+        println!("\nfor iter enumerate");
+        for (i, v) in bts.iter().enumerate() {
+            print!(" {}:{}", i, v);
+        }
+        println!("\n{:?} {:?}", s, bts);
+
+        assert_eq!(s.clone(), s);
+
+        let s = b"h*ll wor#$";
+
+        assert_eq!(s, bts);
     }
 }
