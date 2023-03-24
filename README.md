@@ -6,7 +6,7 @@
 
 运行结果：
 
-![运行结果](l3/r1.png)
+![运行结果](l3/assets/r1.png)
 
 ## l4
 
@@ -15,3 +15,13 @@
 [题6代码](l4/src/uutils/tools.rs)
 
 [题7代码](l4/src/uutils/graph.rs)
+
+## l5
+
+[题5-6代码](l5/pallets/poe/src/lib.rs)
+
+![运行结果1](l5/assets/r1.png)
+
+![运行结果2](l5/assets/r2.png)
+
+![运行结果3](l5/assets/r3.png)

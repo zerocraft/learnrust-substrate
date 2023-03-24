@@ -1,0 +1,16 @@
+**/target/
+**/*.rs.bk
+.DS_Store
+.cargo
+.local
+.direnv
+
+.devcontainer
+.vscode
+docs
+scripts
+.editorconfig
+.envrc
+docker-compose.yml
+rustfmt.toml
+shell.nix
