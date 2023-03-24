@@ -1,6 +1,16 @@
 #![allow(unused)]
 
+pub use nade::core::*;
+use nade::nade;
 use std::{cmp::Ordering, fmt::Debug, slice, usize};
+
+#[nade]
+fn bubble_sort_nade<T>(vec: &Vec<T>, #[nade(true)] ase: bool) -> Vec<T>
+where
+    T: PartialOrd + Copy,
+{
+    bubble_sort::<T>(&vec, ase)
+}
 
 fn bubble_sort<T>(vec: &Vec<T>, asc: bool) -> Vec<T>
 where
@@ -40,7 +50,7 @@ fn main() {}
 
 #[cfg(test)]
 mod test {
-    use crate::bubble_sort;
+    use crate::{bubble_sort, bubble_sort_nade};
     use std::cmp::Ordering;
 
     #[test]
@@ -96,5 +106,13 @@ mod test {
         let s = b"h*ll wor#$";
 
         assert_eq!(s, bts);
+    }
+
+    #[test]
+    fn t4() {
+        let v = vec![3, 5, 45, 5, 86, 91, 123, 32, 1, 56];
+        println!("{:?}", v);
+        let v = bubble_sort_nade!(&v);
+        println!("{:?}", v);
     }
 }
