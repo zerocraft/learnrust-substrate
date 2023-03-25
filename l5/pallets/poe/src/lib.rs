@@ -40,6 +40,7 @@ pub mod pallet {
 		Created(T::AccountId, Vec<u8>),
 		Revoked(T::AccountId, Vec<u8>),
 		Transfer(T::AccountId, T::AccountId, Vec<u8>),
+		HasDest(T::AccountId, bool),
 	}
 
 	#[pallet::error]
@@ -48,6 +49,8 @@ pub mod pallet {
 		TooLong,
 		NotExist,
 		ErrorOwner,
+		SameOwner,
+		NoDest,
 	}
 
 	#[pallet::hooks]
@@ -96,6 +99,12 @@ pub mod pallet {
 			proof: Vec<u8>,
 		) -> DispatchResult {
 			let sender = ensure_signed(origin)?;
+
+			ensure!(sender != dest, Error::<T>::SameOwner);
+
+			let has = frame_system::Pallet::<T>::account_exists(&dest);
+			//ensure!(has, Error::<T>::NoDest); //test failed
+			Self::deposit_event(Event::HasDest(dest.clone(), has));
 
 			let bounded_proof = BoundedVec::<u8, T::MaxLength>::try_from(proof.clone())
 				.map_err(|_| Error::<T>::TooLong)?;

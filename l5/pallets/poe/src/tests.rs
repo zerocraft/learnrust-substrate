@@ -62,6 +62,15 @@ fn transfer() {
 
 		assert_ok!(PoeModule::create_proof(account.clone(), proof.clone()));
 		assert_noop!(
+			PoeModule::transfer_proof(account.clone(), 1, proof.clone()),
+			Error::<Test>::SameOwner
+		);
+		//todo no account
+		// assert_noop!(
+		// 	PoeModule::transfer_proof(account.clone(), 3, proof.clone()),
+		// 	Error::<Test>::NoDest
+		// );
+		assert_noop!(
 			PoeModule::transfer_proof(account.clone(), 2, proof1.clone()),
 			Error::<Test>::TooLong
 		);
