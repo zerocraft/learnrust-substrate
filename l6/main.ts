@@ -44,10 +44,10 @@ const getMetadata = async (api: ApiPromise) => {
 
 const transferFormTo = async (from: string, to: string, api: ApiPromise, amount: Number) => {
     const keyring = new Keyring({ type: 'sr25519' });
-    const facount = keyring.addFromUri(from);
+    const faccount = keyring.addFromUri(from);
     const taccount = keyring.addFromUri(to);
     console.log(`${from} to ${to} ${amount}`);
-    await api.tx.balances.transfer(taccount.address, amount).signAndSend(facount, res => {
+    await api.tx.balances.transfer(taccount.address, amount).signAndSend(faccount, res => {
         console.log(`Tx status:${res.status}`);
     });
 };

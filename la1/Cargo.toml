@@ -3,6 +3,7 @@ members = [
   "node",
   "pallets/template",
   "pallets/poex",
+  "pallets/kittiesx",
   "runtime",
 ]
 resolver = "2"

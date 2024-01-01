@@ -2,7 +2,21 @@
 
 ## Advanced course
 
-### l1
+### l2 Substate Kitties - 1
+
+- [题4 - 代码](la1/pallets/kittiesx/src/lib.rs)
+
+- [运行结果 1](la1/assets/r2.png)
+
+- [运行结果 2](la1/assets/r3.png)
+
+- [运行结果 3](la1/assets/r4.png)
+
+- [题5 - 代码](la1/pallets/kittiesx/src/tests2.rs)
+
+- [运行结果](la1/assets/r5.png)
+
+### l1 Proof of Existence
 
 - [题4 - 代码](la1/pallets/poex/src/lib.rs)
 
