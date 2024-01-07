@@ -33,7 +33,7 @@ pub use frame_support::{
 		},
 		IdentityFee, Weight,
 	},
-	StorageValue,
+	PalletId, StorageValue,
 };
 pub use frame_system::Call as SystemCall;
 pub use pallet_balances::Call as BalancesCall;
@@ -102,7 +102,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	//   `spec_version`, and `authoring_version` are the same between Wasm and native.
 	// This value is set to 100 to notify Polkadot-JS App (https://polkadot.js.org/apps) to use
 	//   the compatible custom types.
-	spec_version: 100,
+	spec_version: 300,
 	impl_version: 1,
 	apis: RUNTIME_API_VERSIONS,
 	transaction_version: 1,
@@ -272,10 +272,18 @@ impl pallet_template::Config for Runtime {
 	type WeightInfo = pallet_template::weights::SubstrateWeight<Runtime>;
 }
 
+parameter_types! {
+	pub KittyPalletId:PalletId =PalletId(*b"kittiesX");
+	pub KittyCreatePrice: Balance = EXISTENTIAL_DEPOSIT *10;
+}
+
 impl pallet_kittiesx::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type WeightInfo = pallet_kittiesx::weights::SubstrateWeight<Runtime>;
 	type Randomness = Randomness;
+	type Currency = Balances;
+	type KittyCreatePrice = KittyCreatePrice;
+	type PalletId = KittyPalletId;
 }
 
 // Create the runtime by composing the FRAME pallets that were previously configured.

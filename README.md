@@ -2,6 +2,18 @@
 
 ## Advanced course
 
+### l3 Substate Kitties - 2
+
+- [题4 - 代码 1](la1/pallets/kittiesx/src/lib.rs#L211)
+
+- [题4 - 代码 2](la1/pallets/kittiesx/src/tests.rs#L168)
+
+- [题5 - 代码](la1/pallets/kittiesx/src/migrations/v2.rs)
+
+- [运行结果 1](la1/assets/r6.png)
+
+- [运行结果 2](la1/assets/r7.png)
+
 ### l2 Substate Kitties - 1
 
 - [题4 - 代码](la1/pallets/kittiesx/src/lib.rs)
@@ -32,11 +44,11 @@
 
 - [题5,6 - 代码](l5/pallets/poe/src/lib.rs)
 
-- [运行结果1](l5/assets/r1.png)
+- [运行结果 1](l5/assets/r1.png)
 
-- [运行结果2](l5/assets/r2.png)
+- [运行结果 2](l5/assets/r2.png)
 
-- [运行结果3](l5/assets/r3.png)
+- [运行结果 3](l5/assets/r3.png)
 
 ### l4
 
