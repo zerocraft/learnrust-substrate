@@ -23,6 +23,7 @@ pub use weights::*;
 pub mod pallet {
 	use super::*;
 	use frame_support::{
+		dispatch::Vec,
 		pallet,
 		pallet_prelude::{OptionQuery, StorageValue, ValueQuery, *},
 		traits::{Currency, ExistenceRequirement, Randomness, ReservableCurrency, StorageVersion},
@@ -33,7 +34,14 @@ pub mod pallet {
 		pallet_prelude::{BlockNumberFor, *},
 	};
 	use sp_io::hashing::blake2_128;
-	use sp_runtime::traits::AccountIdConversion;
+	use sp_runtime::{
+		offchain::{
+			http,
+			storage::{StorageRetrievalError, StorageValueRef},
+			Duration,
+		},
+		traits::{AccountIdConversion, Zero},
+	};
 
 	pub type KittyId = u32;
 
@@ -119,6 +127,25 @@ pub mod pallet {
 			let mut _w = migrations::v1::upgrade::<T>();
 			_w = migrations::v2::upgrade::<T>();
 			_w
+		}
+
+		fn offchain_worker(n: BlockNumberFor<T>) {
+			log::info!("=== offchain_worker === {:?}", n);
+			//Self::offchain_storage(n);
+		}
+
+		fn on_initialize(n: BlockNumberFor<T>) -> Weight {
+			log::info!("=== on_initialize === {:?}", n);
+			Weight::from_parts(0, 0)
+		}
+
+		fn on_finalize(n: BlockNumberFor<T>) {
+			log::info!("=== on_finalize === {:?}", n);
+		}
+
+		fn on_idle(n: BlockNumberFor<T>, _weright: Weight) -> Weight {
+			log::info!("=== on_idle === {:?}", n);
+			Weight::from_parts(0, 0)
 		}
 	}
 
@@ -268,6 +295,89 @@ pub mod pallet {
 
 		fn get_pallet_account_id() -> T::AccountId {
 			T::PalletId::get().into_account_truncating()
+		}
+
+		#[allow(dead_code)]
+		fn time_sleep(n: BlockNumberFor<T>) {
+			// case for hook offchain_worker
+			log::info!("=== time_sleep start === {:?}", n);
+			let timeout = sp_io::offchain::timestamp()
+				.add(sp_runtime::offchain::Duration::from_millis(100000));
+			sp_io::offchain::sleep_until(timeout);
+			log::info!("=== time_sleep end === {:?}", n);
+		}
+
+		#[allow(dead_code)]
+		fn offchain_storage(n: BlockNumberFor<T>) {
+			// case for hook offchain_worker
+			log::info!("=== offchain_storage start === {:?}", n);
+			if n % 2u32.into() != Zero::zero() {
+				let key = Self::derive_block_number_to_key(n);
+				let val_ref = StorageValueRef::persistent(&key);
+
+				let random_slice = sp_io::offchain::random_seed();
+				let timestamp = sp_io::offchain::timestamp().unix_millis();
+				let v = (random_slice, timestamp);
+
+				// // case by set
+				// val_ref.set(&v);
+				// log::info!("=== offchain_storage set === {:?}", v.0);
+
+				// case by mutate
+				let res =
+					val_ref.mutate(|val: Result<Option<([u8; 32], u64)>, _>| -> Result<_, u8> {
+						match val {
+							Ok(Some(_)) => Ok(v),
+							_ => Ok(v),
+						}
+					});
+				match res {
+					Ok(val) => log::info!("=== offchain_storage mutate === {:?}", val),
+					_ => (),
+				}
+			} else {
+				let key = Self::derive_block_number_to_key(n - 1u32.into());
+				let mut val_ref = StorageValueRef::persistent(&key);
+
+				if let Ok(Some((_s, t))) = val_ref.get::<([u8; 32], u64)>() {
+					log::info!("=== offchain_storage get === {:?}", t);
+					val_ref.clear();
+				}
+			}
+			log::info!("=== offchain_storage end === {:?}", n);
+		}
+
+		fn derive_block_number_to_key(n: BlockNumberFor<T>) -> Vec<u8> {
+			n.using_encoded(|encode| {
+				b"storage::".iter().chain(encode).copied().collect::<Vec<u8>>()
+			})
+		}
+
+		#[allow(dead_code)]
+		fn fetch_http(_n: BlockNumberFor<T>) -> Result<(), http::Error> {
+			let url = "https://api.github.com/orgs/substrate-developer-hub";
+			let deadline = sp_io::offchain::timestamp().add(Duration::from_millis(10_000));
+			let request = http::Request::get(url);
+			let pending = request
+				.add_header("User-Agent", "Substrate-Offchain-Worker")
+				.deadline(deadline)
+				.send()
+				.map_err(|_| http::Error::IoError)?;
+			let response =
+				pending.try_wait(deadline).map_err(|_| http::Error::DeadlineReached)??;
+			if response.code != 200 {
+				log::warn!("Unexpected status code: {}", response.code);
+				return Err(http::Error::Unknown)
+			}
+			let body = response.body().collect::<Vec<u8>>();
+			let body_str = sp_std::str::from_utf8(&body).map_err(|_| {
+				log::warn!("No UTF8 body");
+				http::Error::Unknown
+			})?;
+
+			log::info!("=== fetch_http === {:?}", body_str);
+
+			Ok(())
 		}
 	}
 }

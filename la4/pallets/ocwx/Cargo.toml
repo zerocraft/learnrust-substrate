@@ -1,8 +1,8 @@
 [package]
-name = "pallet-kittiesx"
-description = "kittiesx"
+description = "ocwx"
 edition = "2021"
 license = "Unlicense"
+name = "pallet-ocwx"
 publish = false
 version = "0.1.0"
 
@@ -16,17 +16,15 @@ codec = {package = "parity-scale-codec", version = "3.6.1", default-features = f
 frame-benchmarking = {version = "4.0.0-dev", default-features = false, optional = true, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0"}
 frame-support = {version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0"}
 frame-system = {version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0"}
-pallet-balances = {version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0"}
-pallet-insecure-randomness-collective-flip = {version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0"}
+lite-json = {version = "0.2.0", default-features = false}
+log = {version = "0.4.20", default-features = false}
 scale-info = {version = "2.5.0", default-features = false, features = ["derive"]}
+serde = {version = '1.0.195', default-features = false, features = ['derive']}
+serde_json = {version = '1.0.111', default-features = false, features = ['alloc']}
+sp-core = {version = "21.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0"}
 sp-io = {version = "23.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0"}
 sp-runtime = {version = "24.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0"}
 sp-std = {version = "8.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0"}
-
-log = {version = "0.4.20", default-features = false}
-
-[dev-dependencies]
-sp-core = {version = "21.0.0", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0"}
 
 [features]
 default = ["std"]
@@ -36,8 +34,6 @@ std = [
   "frame-benchmarking?/std",
   "frame-support/std",
   "frame-system/std",
-  "pallet-balances/std",
   "scale-info/std",
-  "sp-io/std",
 ]
 try-runtime = ["frame-support/try-runtime"]
