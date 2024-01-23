@@ -2,6 +2,16 @@
 
 ## Advanced course
 
+### l5 smart contracts
+
+- erc20 合约代码 [代码](la5/erc20/lib.rs)
+
+- contracts-node 启动 [运行结果](la5/assets/r1.png)
+
+- 使用 contracts-ui 运行查询 [运行结果](la5/assets/r2.png)
+
+- 使用 contracts-ui 运行转账 [运行结果](la5/assets/r3.png)
+
 ### l4 Off-chain Worker
 
 - offchain_index 写入数据 [代码](la4/pallets/ocwx/src/lib.rs#L159)
