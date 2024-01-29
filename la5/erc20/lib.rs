@@ -214,8 +214,8 @@ mod erc20 {
 
             let msg1 = build_message::<Erc20Ref>(contract_account_id.clone())
                 .call(|erc20| erc20.transfer(bob_acc.clone(), val));
-            let res1 = client.call_dry_run(&ink_e2e::alice(), &msg1, 0, None).await;
-            assert!(res1.exec_result.result.is_ok());
+            let res1 = client.call(&ink_e2e::alice(), msg1, 0, None).await;
+            assert!(res1.unwrap().dry_run.exec_result.result.is_ok());
 
             let msg2 = build_message::<Erc20Ref>(contract_account_id.clone())
                 .call(|erc20| erc20.balance_of(bob_acc));

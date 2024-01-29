@@ -2,6 +2,20 @@
 
 ## Advanced course
 
+### l6 benchmark & online
+
+- benchmarking [代码](la1/pallets/poex/src/benchmarking.rs)
+
+- weights [代码](la1/pallets/poex/src/weights.rs)
+
+- 创建 chain spec 文件
+    ``` bash
+    # chain spec
+    ./target/release/node-template build-spec > chain_spec.json
+    # chain spec raw
+    ./target/release/node-template build-spec --chain=chain_spec.json --raw > chain_spec_raw.json
+    ```
+
 ### l5 smart contracts
 
 - erc20 合约代码 [代码](la5/erc20/lib.rs)
@@ -28,35 +42,35 @@
 
 ### l3 Substate Kitties - 2
 
-- [题4 - 代码 1](la1/pallets/kittiesx/src/lib.rs#L238)
+- kitties 方法完善 [题4 - 代码 1](la1/pallets/kittiesx/src/lib.rs#L238)
 
-- [题4 - 代码 2](la1/pallets/kittiesx/src/tests.rs#L168)
+- kitties 单元测试 [题4 - 代码 2](la1/pallets/kittiesx/src/tests.rs#L168)
 
-- [题5 - 代码](la1/pallets/kittiesx/src/migrations/v2.rs)
+- runtime 升级 [题5 - 代码](la1/pallets/kittiesx/src/migrations/v2.rs)
 
-- [运行结果 升级前](la1/assets/r6.png)
+- Frontend 查看升级前数据 [运行结果 升级前](la1/assets/r6.png)
 
-- [运行结果 升级后](la1/assets/r7.png)
+- Frontend 查看升级后数据 [运行结果 升级后](la1/assets/r7.png)
 
 ### l2 Substate Kitties - 1
 
-- [题4 - 代码](la1/pallets/kittiesx/src/lib.rs)
+- kitties pallet [题4 - 代码](la1/pallets/kittiesx/src/lib.rs)
 
-- [运行结果 1](la1/assets/r2.png)
+- kitties 单元测试 [运行结果 1](la1/assets/r2.png)
 
-- [运行结果 2](la1/assets/r3.png)
+- Node 编译运行 [运行结果 2](la1/assets/r3.png)
 
-- [运行结果 3](la1/assets/r4.png)
+- Frontend kitties 交易 [运行结果 3](la1/assets/r4.png)
 
-- [题5 - 代码](la1/pallets/kittiesx/src/tests2.rs)
+- 获取 event 的单元测试 [题5 - 代码](la1/pallets/kittiesx/src/tests2.rs)
 
-- [运行结果](la1/assets/r5.png)
+- event 单元测试输出 [运行结果](la1/assets/r5.png)
 
 ### l1 Proof of Existence
 
-- [题4 - 代码](la1/pallets/poex/src/lib.rs)
+- 测试用例 [题4 - 代码](la1/pallets/poex/src/lib.rs)
 
-- [运行结果](la1/assets/r1.png)
+- 测试输出 [运行结果](la1/assets/r1.png)
 
 ## Basic Introduction
 

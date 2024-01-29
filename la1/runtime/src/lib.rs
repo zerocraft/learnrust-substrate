@@ -45,6 +45,7 @@ pub use sp_runtime::{Perbill, Permill};
 
 /// Import the template pallet.
 pub use pallet_kittiesx;
+pub use pallet_poex;
 pub use pallet_template;
 
 /// An index to a block.
@@ -272,6 +273,12 @@ impl pallet_template::Config for Runtime {
 	type WeightInfo = pallet_template::weights::SubstrateWeight<Runtime>;
 }
 
+impl pallet_poex::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = pallet_poex::weights::SubstrateWeight<Runtime>;
+	type MaxClaimLength = ConstU32<8>;
+}
+
 parameter_types! {
 	pub KittyPalletId:PalletId =PalletId(*b"kittiesX");
 	pub KittyCreatePrice: Balance = EXISTENTIAL_DEPOSIT *10;
@@ -301,6 +308,7 @@ construct_runtime!(
 		Randomness: pallet_insecure_randomness_collective_flip,
 		TemplateModule: pallet_template,
 		KittiesxModule: pallet_kittiesx,
+		PoexModule: pallet_poex,
 	}
 );
 
@@ -351,6 +359,7 @@ mod benches {
 		[pallet_timestamp, Timestamp]
 		[pallet_sudo, Sudo]
 		[pallet_template, TemplateModule]
+		[pallet_poex,PoexModule]
 	);
 }
 
